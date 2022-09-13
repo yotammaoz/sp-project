@@ -61,10 +61,10 @@ double** allocate_memory_array_of_points(int d, int array_size)
     int i;
     p = calloc(d * array_size, sizeof(double));
     a = calloc(array_size, sizeof(double *));
-    for(i=0 ; i < array_size ; i++ )
-        a[i] = p+ i * d;
     if ((a == NULL)||(p==NULL))
         error();
+    for(i=0 ; i < array_size ; i++ )
+        a[i] = p+ i * d;
     return a;
 }
 

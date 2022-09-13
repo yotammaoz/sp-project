@@ -99,8 +99,16 @@ double **getUnitMatrix(int n)
 {
     double **result = allocate_memory_array_of_points(n, n);
     int i;
-    for (i=0; i < n; i++) {
-        result[i][i] = 1;
+    int j;
+    for (i=0;i<n;i++)
+    {
+        for (j=0; j<n; j++)
+        {
+            if (i==j)
+                result[i][j]=1;
+            else
+                result[i][j]=0;
+        }
     }
     return result;
 }
@@ -264,7 +272,7 @@ int compare_doubles_reversed(const void * first, const void * second)
         return 0;
     if (r>0)
         return -1;
-    if (r<0)
+    else /* r<0 */
         return 1;
 }
 
@@ -278,7 +286,7 @@ int compare_doubles_vect_reversed(const void * first, const void * second)
         return 0;
     if (r>0)
         return -1;
-    if (r<0)
+    else /* r<0 */
         return 1;
 }
 

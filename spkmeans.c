@@ -4,8 +4,11 @@
 #include <string.h>
 #include <stdbool.h>
 #include "useful.h"
+#include "useful.c"
 #include "matrix_calculations.h"
+#include "matrix_calculations.c"
 #include "jacobi.h"
+#include "jacobi.c"
 #include "spkmeans.h"
 
 const char *WAM = "wam";
@@ -31,7 +34,7 @@ int main(int argc, char *argv[])
         invalid_input(); /* if the goal is not one of the specified options, raise invalid_input */
     }
 
-    run_goal(goal, file_name);
+    run_goal(file_name, goal);
     return 0;
 }
 
@@ -53,6 +56,12 @@ struct k_n_and_t_matrix *calc_k_n_and_t(char *file_name, int k)
     ddm = createDiagonalDegreeMatrix(num_of_points,wam);
     norm_lap = createNormalizedGraphLaplacian(num_of_points,ddm,wam);
     jacobi_res = jacobi_alg(num_of_points,norm_lap); /* this runs the jacobi algorithm from jacobi.c */
+
+    free_matrix(points_mat);
+    free_matrix(wam);
+    free_matrix(ddm);
+    free_matrix(norm_lap);
+
     res =  malloc(sizeof(struct k_n_and_t_matrix));
     if (k == 0) {
         k = run_eigengap_heuristic(num_of_points,jacobi_res[0]);
@@ -81,7 +90,6 @@ void run_goal(char *file_name, char *goal)
 
     read_data_from_input_file_to_matrix(points_mat, file_name);
     /* reads the input points into points_mat */
-
 
     if (strcmp(goal,WAM) == 0)  /* goal was wam */
     {
@@ -132,7 +140,9 @@ int get_dimension_from_file(char *filename)
     input_file = fopen(filename,"r");
 
     if (input_file==NULL)
+    {
         error();
+    }
 
     while((curr_char=fgetc(input_file))!=EOF)
     {

@@ -29,6 +29,8 @@ double **jacobi_alg(int n, double **matrix)
     double **rotation_mat;
     double **res;
 
+    printf("running jacobi!");
+
     working_mat = allocate_memory_array_of_points(n,n); /* copy matrix into matrix working_mat */
     if (working_mat==NULL)
         error();
@@ -65,6 +67,8 @@ double **jacobi_alg(int n, double **matrix)
 
 
         rotation_mat = get_rotation_mat(n,i,j,c,s); /* get the rotation mat for the element and c&s */
+        printf("\n");
+        print_mat(n,n,rotation_mat);
 
         working_mat = multipleFromBothSides(n,working_mat,rotation_mat); /* working_mat = rot_mat^T*working_mat*rot_mat */
 
