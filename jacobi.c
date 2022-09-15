@@ -25,23 +25,18 @@ double **jacobi_alg(int n, double **matrix)
     double c;
     double s;
     double **working_mat;
+    double **tmp_working_mat;
     double **eigen_vectors_mat;
+    double **tmp_eigen_vectors_mat;
     double **rotation_mat;
     double **res;
 
-    printf("running jacobi!");
 
     working_mat = allocate_memory_array_of_points(n,n); /* copy matrix into matrix working_mat */
     if (working_mat==NULL)
         error();
     
-    for (i=0; i<n ;i++)
-    {
-        for (j=0; j<n; j++)
-        {
-            working_mat[i][j] = matrix[i][j];
-        }
-    }
+    copy_matrix_into_another(n, matrix, working_mat);
     
 
     eigen_vectors_mat  = getUnitMatrix(n); /* set the matrix for the eigenvectors to I */
@@ -67,12 +62,18 @@ double **jacobi_alg(int n, double **matrix)
 
 
         rotation_mat = get_rotation_mat(n,i,j,c,s); /* get the rotation mat for the element and c&s */
-        printf("\n");
-        print_mat(n,n,rotation_mat);
 
-        working_mat = multipleFromBothSides(n,working_mat,rotation_mat); /* working_mat = rot_mat^T*working_mat*rot_mat */
+        tmp_working_mat = multipleFromBothSides(n,working_mat,rotation_mat); /* working_mat = rot_mat^T*working_mat*rot_mat */
 
-        eigen_vectors_mat = multiplyMatrix(n, eigen_vectors_mat, rotation_mat); /* eigen_vectors_mat=eigen_vectors_mat*rot_mat */
+        copy_matrix_into_another(n,tmp_working_mat,working_mat);
+
+        free_matrix(tmp_working_mat);
+
+        tmp_eigen_vectors_mat = multiplyMatrix(n, eigen_vectors_mat, rotation_mat); /* eigen_vectors_mat=eigen_vectors_mat*rot_mat */
+
+        copy_matrix_into_another(n,tmp_eigen_vectors_mat,eigen_vectors_mat);
+
+        free_matrix(tmp_eigen_vectors_mat);
 
         free_matrix(rotation_mat); /* free the rotation matrix rotation_mat */
 

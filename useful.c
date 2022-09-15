@@ -46,6 +46,7 @@ int* allocate_memory_array_of_size(int k)
 }
 
 double* allocate_memory_array_of_doubles_of_size(int k)
+/* allocates an array of doubles of size k */
 {
     double* a = calloc(k, sizeof(double));
     if (a == NULL)

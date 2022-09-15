@@ -2,7 +2,7 @@
 #include "useful.h"
 #include "kmeans.h"
 
-
+/* clears new_centroids */
 void clear_new_centroids(int d, int k, double **new_centroids, int *clusters_size) {
     int i, j;
     for (i=0 ; i < k ; i++) {
@@ -12,6 +12,7 @@ void clear_new_centroids(int d, int k, double **new_centroids, int *clusters_siz
     }
 }
 
+/* runs the algorithm */
 double ** runAlg(int d, int k, int n, int max_iter, double epsilon, double **data_points, double **centroids,
             double **new_centroids, int* clusters_size){
     int iter, i;
@@ -32,7 +33,7 @@ double ** runAlg(int d, int k, int n, int max_iter, double epsilon, double **dat
     return centroids;
 }
 
-
+/* assigns closest cluster to data_point */
 void assign_closest_cluster(int d, int k, double *data_point, double **centroids, double **new_centroids,
                             int *clusters_size) {
     int j, i = find_closest_cluster(d, k, data_point, centroids);
@@ -42,6 +43,7 @@ void assign_closest_cluster(int d, int k, double *data_point, double **centroids
     }
 }
 
+/* finds closest cluster to data_point */
 int find_closest_cluster(int d, int k, double *data_point, double **centroids) {
     int i, closest_cluster = 0;
     double distance, min_distance = euclidean_norm_powered(d, data_point, centroids[0]);
@@ -55,6 +57,7 @@ int find_closest_cluster(int d, int k, double *data_point, double **centroids) {
     return closest_cluster;
 }
 
+/* updates centroids */
 void update_centroids(int d, int k, double **new_centroids, int* clusters_size) {
     int i, j;
     for (i=0; i < k ; i++) {
@@ -64,6 +67,7 @@ void update_centroids(int d, int k, double **new_centroids, int* clusters_size) 
     }
 }
 
+/* checks convergence of the algorithm */
 int check_convergence(int d, int k, double epsilon, double **centroids, double **new_centroids) {
     int i;
     for (i=0; i < k ; i++) {
