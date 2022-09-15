@@ -14,6 +14,7 @@ double **subtractIbyMatrix(int n, double ** matrix);
 double **createNormalizedGraphLaplacian(int n, double** diagonalDegreeMatrix, double ** weightedAdjacencyMatrix);
 double **transposeMatrix(int n, int m, double **matrix);
 double **multipleFromBothSides(int n, double** matrixA, double ** matrixP);
+void copy_matrix_into_another(int n, double **from, double **into);
 int *getIndicesOfLargestAbsoluteValueInOffDiagonal(int n, double **matrix);
 double *obtainCAndT(int n, double **matrix, int pivotI, int pivotJ);
 double **getUnitMatrix(int n);

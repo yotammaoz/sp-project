@@ -147,6 +147,23 @@ double **multipleFromBothSides(int n, double** matrixA, double ** matrixP)
     return result;
 }
 
+/* copies the from nXn matrix to the into nXn matrix */
+void copy_matrix_into_another(int n, double **from, double **into)
+{
+    int i;
+    int j;
+    
+    for (i=0;i<n;i++)
+    {
+        for (j=0; j<n; j++)
+        {
+            into[i][j] = from[i][j];
+        }
+    }
+
+    return;
+}
+
 /* returns the indices of the element in nXn matrix with the largest absolute value off the diagonal */
 int *getIndicesOfLargestAbsoluteValueInOffDiagonal(int n, double **matrix) 
 {
